@@ -140,8 +140,11 @@ func (c *ConcurrentHash) streamFile(filePath string, blocks chan<- block) error 
 			return err
 		}
 
-		fmt.Printf("%d %d %+v\n", index, n, buf[0:10])
-		blocks <- block{Index: index, Data: buf}
+		// Write must not modify the slice data, even temporarily. Implementations must not retain p
+		// https://pkg.go.dev/io#Writer
+		var transportArr = make([]byte, len(buf))
+		copy(transportArr, buf)
+		blocks <- block{Index: index, Data: transportArr}
 		index++
 	}
 
@@ -156,7 +159,6 @@ func (c *ConcurrentHash) hashBlock(blocks <-chan block, sums chan<- sum, wg *syn
 		if err != nil {
 			return err
 		}
-		//fmt.Println(h64.Sum64())
 		sums <- sum{Index: b.Index, Hash: h64.Sum64()}
 		h64.Reset()
 	}
