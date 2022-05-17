@@ -7,6 +7,7 @@ import (
 	"encoding/gob"
 	"fmt"
 	"hash"
+	"log"
 	"os"
 	"sync"
 
@@ -35,7 +36,7 @@ type ConcurrentHash struct {
 	Hashes  []uint64
 }
 
-func NewConcurrentHash(file string, concurrency int, blockSize int64, hashFunc hash.Hash64) *ConcurrentHash {
+func NewConcurrentHash(concurrency int, blockSize int64, hashFunc hash.Hash64) *ConcurrentHash {
 	var ctx, cancel = context.WithCancel(context.Background())
 
 	return &ConcurrentHash{
@@ -62,9 +63,17 @@ func (c *ConcurrentHash) HashFile(file string) (string, error) {
 	var wg sync.WaitGroup
 	for i := 0; i < c.Concurrency; i++ {
 		wg.Add(1)
-		go c.hashBlock(blocks, sums, &wg)
+		go func() {
+			if err := c.hashBlock(blocks, sums, &wg); err != nil {
+				log.Fatal(err)
+			}
+		}()
 	}
-	go c.streamFile(file, blocks)
+	go func() {
+		if err := c.streamFile(file, blocks); err != nil {
+			log.Fatal(err)
+		}
+	}()
 	wg.Wait()
 
 	// hash the hashes
@@ -96,16 +105,17 @@ func (c *ConcurrentHash) collectSums(sums <-chan sum) {
 					return
 				}
 				c.Hashes[sum.Index] = sum.Hash
+			default:
 			}
 		}
 	}
 }
 
 func (c *ConcurrentHash) streamFile(filePath string, blocks chan<- block) error {
+	defer close(blocks)
 
 	buf, err := os.Open(filePath)
 	if err != nil {
-		close(blocks)
 		return err
 	}
 
@@ -118,13 +128,12 @@ func (c *ConcurrentHash) streamFile(filePath string, blocks chan<- block) error 
 			break // EOF
 		}
 		if err != nil {
-			close(blocks)
 			buf.Close() // err: too bad
 			return err
 		}
-
 		blocks <- block{Index: index, Data: b[0:n]}
 	}
+
 	return buf.Close()
 }
 
