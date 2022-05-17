@@ -7,14 +7,13 @@ import (
 	"encoding/gob"
 	"fmt"
 	"hash"
+	"io"
 	"log"
 	"os"
 	"sync"
 
 	"github.com/twmb/murmur3"
 )
-
-const blockSize = 1e6
 
 type block struct {
 	Index int
@@ -54,7 +53,7 @@ func (c *ConcurrentHash) HashFile(file string) (string, error) {
 		c.Cancel()
 		return "", err
 	}
-	c.Hashes = make([]uint64, (stat.Size()+blockSize-1)/blockSize)
+	c.Hashes = make([]uint64, (stat.Size()+c.BlockSize-1)/c.BlockSize)
 
 	var sums = make(chan sum)
 	var blocks = make(chan block)
@@ -77,6 +76,7 @@ func (c *ConcurrentHash) HashFile(file string) (string, error) {
 	wg.Wait()
 
 	// hash the hashes
+	fmt.Printf("hashes: %+v\n", c.Hashes)
 	var buf bytes.Buffer
 	var enc = gob.NewEncoder(&buf)
 
@@ -114,27 +114,38 @@ func (c *ConcurrentHash) collectSums(sums <-chan sum) {
 func (c *ConcurrentHash) streamFile(filePath string, blocks chan<- block) error {
 	defer close(blocks)
 
-	buf, err := os.Open(filePath)
+	var file, err = os.Open(filePath)
 	if err != nil {
 		return err
 	}
 
-	r := bufio.NewReader(buf)
-	b := make([]byte, blockSize)
+	var r = bufio.NewReader(file)
+	var buf = make([]byte, 0, c.BlockSize)
 	var index int
 	for {
-		n, err := r.Read(b)
+		n, err := r.Read(buf[:cap(buf)])
+		buf = buf[:n]
 		if n == 0 {
-			break // EOF
-		}
-		if err != nil {
-			buf.Close() // err: too bad
+			if err == nil {
+				continue
+			}
+			if err == io.EOF {
+				break
+			}
+			file.Close() // err: too bad
 			return err
 		}
-		blocks <- block{Index: index, Data: b[0:n]}
+		if err != nil && err != io.EOF {
+			close(blocks)
+			return err
+		}
+
+		fmt.Printf("%d %d %+v\n", index, n, buf[0:10])
+		blocks <- block{Index: index, Data: buf}
+		index++
 	}
 
-	return buf.Close()
+	return file.Close()
 }
 
 func (c *ConcurrentHash) hashBlock(blocks <-chan block, sums chan<- sum, wg *sync.WaitGroup) error {
@@ -145,6 +156,7 @@ func (c *ConcurrentHash) hashBlock(blocks <-chan block, sums chan<- sum, wg *syn
 		if err != nil {
 			return err
 		}
+		//fmt.Println(h64.Sum64())
 		sums <- sum{Index: b.Index, Hash: h64.Sum64()}
 		h64.Reset()
 	}
