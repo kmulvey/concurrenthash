@@ -49,6 +49,8 @@ func NewConcurrentHash(concurrency int, blockSize int64, hashFunc hash.Hash64) *
 // HashFile is a coordination func that fans out to hash workers,
 // collects their output and hashes the final array
 func (c *ConcurrentHash) HashFile(file string) (string, error) {
+
+	// make sure the file even exists first
 	var stat, err = os.Stat(file)
 	if err != nil {
 		c.Cancel()
@@ -56,20 +58,27 @@ func (c *ConcurrentHash) HashFile(file string) (string, error) {
 	}
 	c.Hashes = make([]uint64, (stat.Size()+c.BlockSize-1)/c.BlockSize)
 
-	var sums = make(chan sum)
+	// startup all our routines, readers first
+	var sumChans = make([]chan sum, c.Concurrency)
 	var blocks = make(chan block)
 	var errGroup = new(errgroup.Group)
 
-	go c.collectSums(sums)
 	for i := 0; i < c.Concurrency; i++ {
+		var sums = make(chan sum)
+		sumChans[i] = sums
 		errGroup.Go(func() error {
 			return c.hashBlock(blocks, sums)
 		})
 	}
 	errGroup.Go(func() error {
+		c.collectSums(mergeSums(sumChans...))
+		return nil
+	})
+	errGroup.Go(func() error {
 		return c.streamFile(file, blocks)
 	})
 
+	// wait for all ^^ to finish
 	if err := errGroup.Wait(); err != nil {
 		return "", err
 	}

@@ -8,6 +8,7 @@ import (
 
 // hashBlock runs the hash func on each block of bytes
 func (c *ConcurrentHash) hashBlock(blocks <-chan block, sums chan<- sum) error {
+	defer close(sums)
 	for {
 		select {
 		case <-c.Context.Done():
