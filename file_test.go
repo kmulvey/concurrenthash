@@ -34,6 +34,8 @@ func TestReadFile(t *testing.T) {
 		close(done)
 	}()
 
-	go cs.streamFile("./rand-file.txt", blocks)
+	go func() {
+		assert.NoError(t, cs.streamFile("./rand-file.txt", blocks))
+	}()
 	<-done
 }

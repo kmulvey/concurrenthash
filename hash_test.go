@@ -25,7 +25,9 @@ func TestHash(t *testing.T) {
 		}
 	}()
 
-	go cs.hashBlock(blocks, sums)
+	go func() {
+		assert.NoError(t, cs.hashBlock(blocks, sums))
+	}()
 
 	blocks <- block{Index: 0, Data: []byte{0x32, 0x96, 0xd0, 0x3, 0x2b, 0x56, 0x72, 0x2b, 0xaf, 0x39}}
 	time.Sleep(time.Millisecond * 100)
