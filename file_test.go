@@ -1,6 +1,7 @@
 package concurrenthash
 
 import (
+	"context"
 	"crypto/sha256"
 	"testing"
 
@@ -24,7 +25,7 @@ func TestReadFile(t *testing.T) {
 	t.Parallel()
 
 	var blocks = make(chan block)
-	var cs = NewConcurrentHash(1, 10, sha256.New)
+	var cs = NewConcurrentHash(context.Background(), 1, 10, sha256.New)
 
 	var done = make(chan struct{})
 	go func() {

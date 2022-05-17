@@ -28,20 +28,17 @@ type ConcurrentHash struct {
 
 	// internal
 	Context context.Context
-	Cancel  context.CancelFunc
 	Hashes  [][]byte
 }
 
 // NewConcurrentHash is the constructor and entrypoint
-func NewConcurrentHash(concurrency int, blockSize int64, hashFunc func() hash.Hash) *ConcurrentHash {
-	var ctx, cancel = context.WithCancel(context.Background())
+func NewConcurrentHash(ctx context.Context, concurrency int, blockSize int64, hashFunc func() hash.Hash) *ConcurrentHash {
 
 	return &ConcurrentHash{
 		Concurrency:     concurrency,
 		BlockSize:       blockSize,
 		HashConstructor: hashFunc,
 		Context:         ctx,
-		Cancel:          cancel,
 	}
 }
 
@@ -52,7 +49,6 @@ func (c *ConcurrentHash) HashFile(file string) (string, error) {
 	// make sure the file even exists first
 	var stat, err = os.Stat(file)
 	if err != nil {
-		c.Cancel()
 		return "", err
 	}
 	c.Hashes = make([][]byte, (stat.Size()+c.BlockSize-1)/c.BlockSize)
@@ -87,7 +83,6 @@ func (c *ConcurrentHash) HashFile(file string) (string, error) {
 	var enc = gob.NewEncoder(&buf)
 
 	if err := enc.Encode(c.Hashes); err != nil {
-		c.Cancel()
 		return "", err
 	}
 

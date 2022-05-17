@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"crypto/md5"
 	"crypto/sha1"
 	"crypto/sha256"
@@ -43,6 +44,7 @@ func main() {
 	var threads int
 	var blockSize int64
 	var algos bool
+	var ctx = context.Background()
 
 	flag.BoolVar(&algos, "algos", false, "file to hash (abs path)")
 	flag.StringVar(&file, "file", "", "file to hash (abs path)")
@@ -74,7 +76,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	var ch = concurrenthash.NewConcurrentHash(threads, blockSize, argToHashFuncMap[hashFunc])
+	var ch = concurrenthash.NewConcurrentHash(ctx, threads, blockSize, argToHashFuncMap[hashFunc])
 	var hash, err = ch.HashFile(file)
 	if err != nil {
 		fmt.Printf("Encountered an error: %s", err.Error())
