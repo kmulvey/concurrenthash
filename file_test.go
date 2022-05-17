@@ -21,6 +21,8 @@ var testFileBytes = [][]byte{
 }
 
 func TestReadFile(t *testing.T) {
+	t.Parallel()
+
 	var blocks = make(chan block)
 	var cs = NewConcurrentHash(1, 10, murmur3.New64())
 

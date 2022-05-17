@@ -8,6 +8,8 @@ import (
 )
 
 func TestEverything(t *testing.T) {
+	t.Parallel()
+
 	var cs = NewConcurrentHash(2, 10, murmur3.New64())
 	var sum, err = cs.HashFile("./rand-file.txt")
 	assert.NoError(t, err)

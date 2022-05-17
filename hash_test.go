@@ -9,6 +9,8 @@ import (
 )
 
 func TestHash(t *testing.T) {
+	t.Parallel()
+
 	var blocks = make(chan block)
 	var sums = make(chan sum)
 	var ctx, cancel = context.WithCancel(context.Background())
