@@ -1,14 +1,9 @@
 package concurrenthash
 
-import (
-	"hash"
-
-	"github.com/twmb/murmur3"
-)
-
 // hashBlock runs the hash func on each block of bytes
 func (c *ConcurrentHash) hashBlock(blocks <-chan block, sums chan<- sum) error {
 	defer close(sums)
+	var h = c.HashConstructor()
 	for {
 		select {
 		case <-c.Context.Done():
@@ -19,13 +14,12 @@ func (c *ConcurrentHash) hashBlock(blocks <-chan block, sums chan<- sum) error {
 				if !open {
 					return nil
 				}
-				var h64 hash.Hash64 = murmur3.New64()
-				var _, err = h64.Write(b.Data)
+				h.Reset()
+				var _, err = h.Write(b.Data)
 				if err != nil {
 					return err
 				}
-				sums <- sum{Index: b.Index, Hash: h64.Sum64()}
-				h64.Reset()
+				sums <- sum{Index: b.Index, Hash: h.Sum(nil)}
 			default:
 			}
 		}

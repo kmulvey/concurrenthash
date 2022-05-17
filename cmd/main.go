@@ -1,13 +1,13 @@
 package main
 
 import (
+	"crypto/sha512"
 	"flag"
 	"fmt"
 	"math"
 	"runtime"
 
 	"github.com/kmulvey/concurrenthash"
-	"github.com/twmb/murmur3"
 )
 
 var MB = int64(math.Pow(1024, 2))
@@ -28,7 +28,7 @@ func main() {
 		threads = 1
 	}
 
-	var ch = concurrenthash.NewConcurrentHash(threads, blockSize, murmur3.New64())
+	var ch = concurrenthash.NewConcurrentHash(threads, blockSize, sha512.New)
 	var hash, err = ch.HashFile(file)
 	if err != nil {
 		fmt.Printf("Encountered an error: %s", err.Error())

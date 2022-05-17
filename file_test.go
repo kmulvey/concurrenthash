@@ -1,10 +1,10 @@
 package concurrenthash
 
 import (
+	"crypto/sha256"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/twmb/murmur3"
 )
 
 var testFileBytes = [][]byte{
@@ -24,7 +24,7 @@ func TestReadFile(t *testing.T) {
 	t.Parallel()
 
 	var blocks = make(chan block)
-	var cs = NewConcurrentHash(1, 10, murmur3.New64())
+	var cs = NewConcurrentHash(1, 10, sha256.New)
 
 	var done = make(chan struct{})
 	go func() {

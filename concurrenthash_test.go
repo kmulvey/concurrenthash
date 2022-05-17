@@ -3,15 +3,16 @@ package concurrenthash
 import (
 	"testing"
 
+	"crypto/sha256"
+
 	"github.com/stretchr/testify/assert"
-	"github.com/twmb/murmur3"
 )
 
 func TestEverything(t *testing.T) {
 	t.Parallel()
 
-	var cs = NewConcurrentHash(2, 10, murmur3.New64())
+	var cs = NewConcurrentHash(2, 10, sha256.New)
 	var sum, err = cs.HashFile("./rand-file.txt")
 	assert.NoError(t, err)
-	assert.Equal(t, "8434139902547509435", sum)
+	assert.Equal(t, "bf842e96b246556052bc7e518de1fdf7c4a5a859ad104a201880074bece30b82", sum)
 }

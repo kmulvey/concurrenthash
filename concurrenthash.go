@@ -8,7 +8,6 @@ import (
 	"hash"
 	"os"
 
-	"github.com/twmb/murmur3"
 	"golang.org/x/sync/errgroup"
 )
 
@@ -18,31 +17,31 @@ type block struct {
 }
 type sum struct {
 	Index int
-	Hash  uint64
+	Hash  []byte
 }
 
 // ConcurrentHash is basically a https://en.wikipedia.org/wiki/Merkle_tree
 type ConcurrentHash struct {
-	Concurrency int
-	BlockSize   int64
-	HashFunc    hash.Hash64
+	Concurrency     int
+	BlockSize       int64
+	HashConstructor func() hash.Hash
 
 	// internal
 	Context context.Context
 	Cancel  context.CancelFunc
-	Hashes  []uint64
+	Hashes  [][]byte
 }
 
 // NewConcurrentHash is the constructor and entrypoint
-func NewConcurrentHash(concurrency int, blockSize int64, hashFunc hash.Hash64) *ConcurrentHash {
+func NewConcurrentHash(concurrency int, blockSize int64, hashFunc func() hash.Hash) *ConcurrentHash {
 	var ctx, cancel = context.WithCancel(context.Background())
 
 	return &ConcurrentHash{
-		Concurrency: concurrency,
-		BlockSize:   blockSize,
-		HashFunc:    hashFunc,
-		Context:     ctx,
-		Cancel:      cancel,
+		Concurrency:     concurrency,
+		BlockSize:       blockSize,
+		HashConstructor: hashFunc,
+		Context:         ctx,
+		Cancel:          cancel,
 	}
 }
 
@@ -56,7 +55,7 @@ func (c *ConcurrentHash) HashFile(file string) (string, error) {
 		c.Cancel()
 		return "", err
 	}
-	c.Hashes = make([]uint64, (stat.Size()+c.BlockSize-1)/c.BlockSize)
+	c.Hashes = make([][]byte, (stat.Size()+c.BlockSize-1)/c.BlockSize)
 
 	// startup all our routines, readers first
 	var sumChans = make([]chan sum, c.Concurrency)
@@ -92,10 +91,11 @@ func (c *ConcurrentHash) HashFile(file string) (string, error) {
 		return "", err
 	}
 
-	var h64 hash.Hash64 = murmur3.New64()
-	_, err = h64.Write(buf.Bytes())
+	var h = c.HashConstructor()
+	h.Reset()
+	h.Write(buf.Bytes())
 	if err != nil {
 		return "", err
 	}
-	return fmt.Sprint(h64.Sum64()), nil
+	return fmt.Sprintf("%x", h.Sum(nil)), nil
 }
