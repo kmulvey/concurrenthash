@@ -8,14 +8,25 @@ import (
 
 // hashBlock runs the hash func on each block of bytes
 func (c *ConcurrentHash) hashBlock(blocks <-chan block, sums chan<- sum) error {
-	for b := range blocks {
-		var h64 hash.Hash64 = murmur3.New64()
-		var _, err = h64.Write(b.Data)
-		if err != nil {
-			return err
+	for {
+		select {
+		case <-c.Context.Done():
+			return nil
+		default:
+			select {
+			case b, open := <-blocks:
+				if !open {
+					return nil
+				}
+				var h64 hash.Hash64 = murmur3.New64()
+				var _, err = h64.Write(b.Data)
+				if err != nil {
+					return err
+				}
+				sums <- sum{Index: b.Index, Hash: h64.Sum64()}
+				h64.Reset()
+			default:
+			}
 		}
-		sums <- sum{Index: b.Index, Hash: h64.Sum64()}
-		h64.Reset()
 	}
-	return nil
 }
