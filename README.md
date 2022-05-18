@@ -46,3 +46,7 @@ Time to hash a 10GB file of /dev/urandom data
 | sha1              | 13.07
 | sha256            | 18.14
 | sha512            | 18.10
+
+## Block size benchmarks
+[Raw data](./benchmarks.csv)
+![Benchmarks](./benchmarks.svg "benchmarks")
