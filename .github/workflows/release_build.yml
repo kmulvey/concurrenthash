@@ -32,6 +32,10 @@ jobs:
           go mod tidy
           go test -v -race -count 1 -parallel 5 ./...
           go build -v -ldflags="-s -w" ./...
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3  
+        with:
+          verbose: true # optional (default = false)
 
   release:
     name: concurrenthash release
