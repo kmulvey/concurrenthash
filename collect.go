@@ -12,7 +12,9 @@ func (c *ConcurrentHash) collectSums(sums <-chan sum) {
 				if !open {
 					return
 				}
+				c.HashesLock.Lock()
 				c.Hashes[sum.Index] = sum.Hash
+				c.HashesLock.Unlock()
 			default:
 			}
 		}
