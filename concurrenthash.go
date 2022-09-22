@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"hash"
 	"os"
+	"sync"
 
 	"golang.org/x/sync/errgroup"
 )
@@ -27,8 +28,9 @@ type ConcurrentHash struct {
 	HashConstructor func() hash.Hash
 
 	// internal
-	Context context.Context
-	Hashes  [][]byte
+	Context    context.Context
+	Hashes     [][]byte
+	HashesLock sync.RWMutex
 }
 
 // NewConcurrentHash is the constructor and entrypoint
@@ -50,7 +52,9 @@ func (c *ConcurrentHash) HashFile(file string) (string, error) {
 	if err != nil {
 		return "", err
 	}
+	c.HashesLock.Lock()
 	c.Hashes = make([][]byte, (stat.Size()+c.BlockSize-1)/c.BlockSize)
+	c.HashesLock.Unlock()
 
 	// startup all our routines, readers first
 	var sumChans = make([]chan sum, c.Concurrency)
@@ -81,9 +85,11 @@ func (c *ConcurrentHash) HashFile(file string) (string, error) {
 	var buf bytes.Buffer
 	var enc = gob.NewEncoder(&buf)
 
+	c.HashesLock.Lock()
 	if err := enc.Encode(c.Hashes); err != nil {
 		return "", err
 	}
+	c.HashesLock.Unlock()
 
 	var h = c.HashConstructor()
 	h.Reset()
