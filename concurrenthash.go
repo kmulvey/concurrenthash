@@ -9,6 +9,7 @@ import (
 	"os"
 	"sync"
 
+	"github.com/kmulvey/goutils"
 	"golang.org/x/sync/errgroup"
 )
 
@@ -69,7 +70,7 @@ func (c *ConcurrentHash) HashFile(file string) (string, error) {
 		})
 	}
 	errGroup.Go(func() error {
-		c.collectSums(mergeSums(sumChans...))
+		c.collectSums(goutils.MergeChannels(sumChans...))
 		return nil
 	})
 	errGroup.Go(func() error {
