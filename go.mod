@@ -6,7 +6,7 @@ require (
 	github.com/kmulvey/goutils v0.6.0
 	github.com/stretchr/testify v1.8.0
 	github.com/twmb/murmur3 v1.1.6
-	golang.org/x/sync v0.0.0-20220907140024-f12130a52804
+	golang.org/x/sync v0.1.0
 )
 
 require (
