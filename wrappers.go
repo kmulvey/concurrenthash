@@ -1,6 +1,7 @@
 package concurrenthash
 
 import (
+	"crypto/sha512"
 	"hash"
 	"hash/adler32"
 	"hash/crc32"
@@ -64,4 +65,20 @@ func WrapMurmur32() hash.Hash {
 
 func WrapMurmur64() hash.Hash {
 	return murmur3.New64()
+}
+
+func WrapSha512() hash.Hash {
+	return sha512.New()
+}
+
+func WrapSha384() hash.Hash {
+	return sha512.New384()
+}
+
+func WrapSha512224() hash.Hash {
+	return sha512.New512_224()
+}
+
+func WrapSha512256() hash.Hash {
+	return sha512.New512_256()
 }
