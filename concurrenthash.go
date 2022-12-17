@@ -35,8 +35,8 @@ type ConcurrentHash struct {
 }
 
 // NewConcurrentHash is the constructor and entrypoint
-func NewConcurrentHash(ctx context.Context, concurrency int, blockSize int64, hashFunc func() hash.Hash) *ConcurrentHash {
-	return &ConcurrentHash{
+func NewConcurrentHash(ctx context.Context, concurrency int, blockSize int64, hashFunc func() hash.Hash) ConcurrentHash {
+	return ConcurrentHash{
 		Concurrency:     concurrency,
 		BlockSize:       blockSize,
 		HashConstructor: hashFunc,
