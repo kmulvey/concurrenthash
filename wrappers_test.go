@@ -30,6 +30,8 @@ var testMatrix = []testPair{
 	{HashFunc: WrapSha384, Expected: "fe7ce20c68d58076774402eb2bb27c57978a69f3ae7778387ddd52bc9e4d48f7a42496a97dd97bb560be23ecccecabd5"},
 	{HashFunc: WrapSha512224, Expected: "8fa68c2902b434728a005ffdc77338b84b7784f58e7f6832b09d1d2b"},
 	{HashFunc: WrapSha512256, Expected: "800b50f0c527cd902b7d5478ea9bbc277b2aaa6e15d5e9ff024cbf31ed582661"},
+	{HashFunc: WrapSha256, Expected: "bf842e96b246556052bc7e518de1fdf7c4a5a859ad104a201880074bece30b82"},
+	{HashFunc: WrapSha224, Expected: "c50e3b0a3f05746297ce9409495e77e91f4b305953ad352a7a264f39"},
 }
 
 func TestWrappers(t *testing.T) {

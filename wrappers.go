@@ -1,6 +1,7 @@
 package concurrenthash
 
 import (
+	"crypto/sha256"
 	"crypto/sha512"
 	"hash"
 	"hash/adler32"
@@ -81,4 +82,12 @@ func WrapSha512224() hash.Hash {
 
 func WrapSha512256() hash.Hash {
 	return sha512.New512_256()
+}
+
+func WrapSha256() hash.Hash {
+	return sha256.New()
+}
+
+func WrapSha224() hash.Hash {
+	return sha256.New224()
 }
