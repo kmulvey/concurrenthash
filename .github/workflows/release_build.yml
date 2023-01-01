@@ -7,7 +7,6 @@ jobs:
     name: concurrenthash build
     strategy:
       matrix:
-        go-version: [1.19.x]
         os: [ubuntu-latest, macos-latest, windows-latest]
     runs-on: ${{ matrix.os }}
 
@@ -18,6 +17,8 @@ jobs:
       - name: Set up Go 
         uses: actions/setup-go@v3
         with:
+          check-latest: true
+          cache: true
           go-version: 1.19
         id: go
 
@@ -27,11 +28,15 @@ jobs:
           version: latest
           args: --timeout=5m
 
+      - name: Govulncheck
+        uses: kmulvey/govulncheck-action@v1.0.0
+
       - name: Build & Test
         run: |
           go mod tidy
           go test -v -race -count 1 -parallel 5 -covermode=atomic -coverprofile=coverage.out ./...
           go build -v -ldflags="-s -w" ./...
+
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3  
         with:
@@ -51,6 +56,8 @@ jobs:
         uses: actions/setup-go@v3
         with:
           go-version: 1.19
+          check-latest: true
+          cache: true
         id: go
 
       - name: Run GoReleaser
@@ -60,4 +67,3 @@ jobs:
           args: release --config .goreleaser.yaml --rm-dist
         env:
           GITHUB_TOKEN: ${{ secrets.GO_RELEASER_GITHUB_TOKEN }}
-
