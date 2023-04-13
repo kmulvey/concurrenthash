@@ -55,7 +55,7 @@ func TestReadFileNotExist(t *testing.T) {
 	}()
 
 	go func() {
-		assert.Contains(t, "open ./nofile.txt: ", cs.streamFile("./nofile.txt", blocks).Error())
+		assert.Contains(t, cs.streamFile("./nofile.txt", blocks).Error(), "open ./nofile.txt: ")
 	}()
 	<-done
 }

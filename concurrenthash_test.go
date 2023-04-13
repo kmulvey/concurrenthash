@@ -19,6 +19,6 @@ func TestEverything(t *testing.T) {
 	assert.Equal(t, "bf842e96b246556052bc7e518de1fdf7c4a5a859ad104a201880074bece30b82", sum)
 
 	sum, err = cs.HashFile(ctx, "./sdfsdfsf.txt")
-	assert.Contains(t, "stat ./sdfsdfsf.txt:", err.Error())
+	assert.Contains(t, err.Error(), "stat ./sdfsdfsf.txt:")
 	assert.Equal(t, "", sum)
 }
