@@ -2,7 +2,9 @@ package main
 
 import (
 	"context"
+	//nolint:gosec
 	"crypto/md5"
+	//nolint:gosec
 	"crypto/sha1"
 	"crypto/sha256"
 	"crypto/sha512"
