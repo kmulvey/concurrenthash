@@ -29,24 +29,22 @@ type ConcurrentHash struct {
 	HashConstructor func() hash.Hash
 
 	// internal
-	Context    context.Context
 	Hashes     [][]byte
 	HashesLock sync.RWMutex
 }
 
 // NewConcurrentHash is the constructor and entrypoint
-func NewConcurrentHash(ctx context.Context, concurrency int, blockSize int64, hashFunc func() hash.Hash) ConcurrentHash {
+func NewConcurrentHash(concurrency int, blockSize int64, hashFunc func() hash.Hash) ConcurrentHash {
 	return ConcurrentHash{
 		Concurrency:     concurrency,
 		BlockSize:       blockSize,
 		HashConstructor: hashFunc,
-		Context:         ctx,
 	}
 }
 
 // HashFile is a coordination func that fans out to hash workers,
 // collects their output and hashes the final array
-func (c *ConcurrentHash) HashFile(file string) (string, error) {
+func (c *ConcurrentHash) HashFile(ctx context.Context, file string) (string, error) {
 
 	// make sure the file even exists first
 	var stat, err = os.Stat(file)
@@ -66,11 +64,11 @@ func (c *ConcurrentHash) HashFile(file string) (string, error) {
 		var sums = make(chan sum)
 		sumChans[i] = sums
 		errGroup.Go(func() error {
-			return c.hashBlock(blocks, sums)
+			return c.hashBlock(ctx, blocks, sums)
 		})
 	}
 	errGroup.Go(func() error {
-		c.collectSums(goutils.MergeChannels(sumChans...))
+		c.collectSums(ctx, goutils.MergeChannels(sumChans...))
 		return nil
 	})
 	errGroup.Go(func() error {
@@ -94,7 +92,7 @@ func (c *ConcurrentHash) HashFile(file string) (string, error) {
 
 	var h = c.HashConstructor()
 	h.Reset()
-	h.Write(buf.Bytes())
+	_, err = h.Write(buf.Bytes())
 	if err != nil {
 		return "", err
 	}

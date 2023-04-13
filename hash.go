@@ -1,12 +1,14 @@
 package concurrenthash
 
+import "context"
+
 // hashBlock runs the hash func on each block of bytes
-func (c *ConcurrentHash) hashBlock(blocks <-chan block, sums chan<- sum) error {
+func (c *ConcurrentHash) hashBlock(ctx context.Context, blocks <-chan block, sums chan<- sum) error {
 	defer close(sums)
 	var h = c.HashConstructor()
 	for {
 		select {
-		case <-c.Context.Done():
+		case <-ctx.Done():
 			return nil
 		default:
 			select {

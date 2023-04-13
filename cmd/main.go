@@ -76,8 +76,8 @@ func main() {
 		os.Exit(1)
 	}
 
-	var ch = concurrenthash.NewConcurrentHash(ctx, threads, blockSize, argToHashFuncMap[hashFunc])
-	var hash, err = ch.HashFile(file)
+	var ch = concurrenthash.NewConcurrentHash(threads, blockSize, argToHashFuncMap[hashFunc])
+	var hash, err = ch.HashFile(ctx, file)
 	if err != nil {
 		fmt.Printf("Encountered an error: %s", err.Error())
 		return

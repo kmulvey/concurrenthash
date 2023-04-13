@@ -38,8 +38,8 @@ func TestWrappers(t *testing.T) {
 	t.Parallel()
 
 	for _, pair := range testMatrix {
-		var cs = NewConcurrentHash(context.Background(), 2, 10, pair.HashFunc)
-		var sum, err = cs.HashFile("./rand-file.txt")
+		var cs = NewConcurrentHash(2, 10, pair.HashFunc)
+		var sum, err = cs.HashFile(context.Background(), "./rand-file.txt")
 		assert.NoError(t, err)
 		assert.Equal(t, pair.Expected, sum)
 	}

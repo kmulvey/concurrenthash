@@ -1,10 +1,12 @@
 package concurrenthash
 
+import "context"
+
 // collectSums is a fan in func to get the hashes and write them to an array
-func (c *ConcurrentHash) collectSums(sums <-chan sum) {
+func (c *ConcurrentHash) collectSums(ctx context.Context, sums <-chan sum) {
 	for {
 		select {
-		case <-c.Context.Done():
+		case <-ctx.Done():
 			return
 		default:
 			select {

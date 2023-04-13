@@ -16,7 +16,7 @@ func TestHash(t *testing.T) {
 	var blocks = make(chan block)
 	var sums = make(chan sum)
 	var ctx, cancel = context.WithCancel(context.Background())
-	var cs = ConcurrentHash{Context: ctx, HashConstructor: sha256.New}
+	var cs = ConcurrentHash{HashConstructor: sha256.New}
 
 	go func() {
 		for sum := range sums {
@@ -26,7 +26,7 @@ func TestHash(t *testing.T) {
 	}()
 
 	go func() {
-		assert.NoError(t, cs.hashBlock(blocks, sums))
+		assert.NoError(t, cs.hashBlock(ctx, blocks, sums))
 	}()
 
 	blocks <- block{Index: 0, Data: []byte{0x32, 0x96, 0xd0, 0x3, 0x2b, 0x56, 0x72, 0x2b, 0xaf, 0x39}}

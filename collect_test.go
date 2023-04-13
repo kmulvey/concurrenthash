@@ -11,10 +11,10 @@ func TestCollectSums(t *testing.T) {
 	t.Parallel()
 
 	var ctx, cancel = context.WithCancel(context.Background())
-	var cs = NewConcurrentHash(ctx, 2, 10, sha256.New)
+	var cs = NewConcurrentHash(2, 10, sha256.New)
 	cs.Hashes = make([][]byte, 2)
 	var sums = make(chan sum)
-	go cs.collectSums(sums)
+	go cs.collectSums(ctx, sums)
 
 	sums <- sum{
 		Index: 1,
