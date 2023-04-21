@@ -1,0 +1,663 @@
+- semver: 1.5.1
+  date: 2023-04-15T10:33:18-06:00
+  packager: Kevin Mulvey <kmulvey@linux.com>
+  changes:
+    - commit: 9c7bd25563939665ca74f08b30318516b5d1447f
+      note: build packages
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+- semver: 1.5.0
+  date: 2023-04-13T09:45:36-06:00
+  packager: Kevin Mulvey <kmulvey@linux.com>
+  changes:
+    - commit: 18ba38133958964167ed72e0ba801a5344c62c90
+      note: deps
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+    - commit: 54f29560ce151ef148ecebc7d0bd5c522a39669e
+      note: weak tests for windows
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+    - commit: 4501f73738f88cbd2f8afff3f5db32bb0b16f13a
+      note: Contains args are backwards
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+    - commit: 57715e5f3d872f0b8c2f2a0e37e4be4e195153b7
+      note: less strict error checking for window
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+    - commit: 2055970f61d9448b8c3b65fde9974b9b97fa2e84
+      note: ignore insecure hash warnings
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+    - commit: be6b7ae8b6ec76db77137e85d14564170e26c160
+      note: remove context from struct and pass it in when needed
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+    - commit: caf5fffc0d4ffebd56bc16c45dc63b455f815ca3
+      note: more ci cd config changes
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+    - commit: c852e085c682862bf9557381234179dca21e3862
+      note: normalize ci cd configs
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+    - commit: 4f45072311882f8c49aa1f400e8d33c7067b9fb8
+      note: normalize github actions
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+- semver: 1.4.0
+  date: 2022-12-17T11:20:11-07:00
+  packager: Kevin Mulvey <kmulvey@linux.com>
+  changes:
+    - commit: 77adcbf2528bd5a8b4689ee2628263bece49df06
+      note: return value to prevent heap alloc
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+    - commit: 9f956e28cd547e65f544bb0f1a542bfde888235b
+      note: sha256
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+- semver: 1.3.0
+  date: 2022-12-16T14:00:03-07:00
+  packager: Kevin Mulvey <kmulvey@linux.com>
+  changes:
+    - commit: a3f573e3d7ee1d6bc239199b8c9054195554809e
+      note: test bad filename
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+    - commit: 7c3f6e74d5958d43208e0df6762d487602ee01ae
+      note: ' add sha512 family and use a test matrix to save some lines'
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+    - commit: 5b274ca114b01841e69c6887b7996304efbf712d
+      note: simplify returns
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+- semver: 1.2.3
+  date: 2022-10-27T10:12:00-06:00
+  packager: Kevin Mulvey <kmulvey@linux.com>
+  changes:
+    - commit: 2a8a69285e511227520703a3c0799f21e1098d5c
+      note: |-
+        Merge pull request #5 from kmulvey/dependabot/go_modules/github.com/stretchr/testify-1.8.1
+
+        Bump github.com/stretchr/testify from 1.8.0 to 1.8.1
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: GitHub
+        email: noreply@github.com
+    - commit: a73498ebfb1cef8d4ae6d4eb6bdb5c9d90e9594a
+      note: |-
+        Bump github.com/stretchr/testify from 1.8.0 to 1.8.1
+
+        Bumps [github.com/stretchr/testify](https://github.com/stretchr/testify) from 1.8.0 to 1.8.1.
+        - [Release notes](https://github.com/stretchr/testify/releases)
+        - [Commits](https://github.com/stretchr/testify/compare/v1.8.0...v1.8.1)
+
+        ---
+        updated-dependencies:
+        - dependency-name: github.com/stretchr/testify
+          dependency-type: direct:production
+          update-type: version-update:semver-patch
+        ...
+      author:
+        name: dependabot[bot]
+        email: 49699333+dependabot[bot]@users.noreply.github.com
+      committer:
+        name: GitHub
+        email: noreply@github.com
+    - commit: 8d408351d52caa02627b6fb19c39bd6f53c02260
+      note: deps
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+    - commit: 1fca47fa3bae5be482c88221df97dc27580cdc17
+      note: use goutils Merge instead
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+- semver: 1.2.2
+  date: 2022-09-22T12:49:47-06:00
+  packager: Kevin Mulvey <kmulvey@linux.com>
+  changes:
+    - commit: 709fbe5ff02cd240c3dcb2f5215b6e60caf46857
+      note: lock map
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+- semver: 1.2.0
+  date: 2022-09-22T12:12:11-06:00
+  packager: Kevin Mulvey <kmulvey@linux.com>
+  changes:
+    - commit: 176696b879eb2c9d66216638c732c4f27c72cda7
+      note: deps
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+    - commit: a43b4736f9df9941c7e8bfbc86b9a737817cd19c
+      note: lock hashes slice
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+- semver: 1.1.0
+  date: 2022-08-05T10:43:13-06:00
+  packager: Kevin Mulvey <kmulvey@linux.com>
+  changes:
+    - commit: c9055f8e84f89d3eae75b8b27699f1da5777f449
+      note: |-
+        Merge pull request #4 from kmulvey/go-19
+
+        go 1.19 and deps
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: GitHub
+        email: noreply@github.com
+    - commit: 11b6df222cab2a97c917aafbbc762f09adae3e99
+      note: go 1.19 and deps
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+    - commit: 6734c003612fcba200608306fa8f027a9cb35329
+      note: |-
+        Revert "go 1.19 and deps"
+        golangci-lint not working yet
+
+        This reverts commit c99661a4b4d3aa4a1f41a6edf94e5d53d0b81638.
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+    - commit: c99661a4b4d3aa4a1f41a6edf94e5d53d0b81638
+      note: go 1.19 and deps
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+    - commit: d55a31136cd0f92f493eb1167569748dc9e41dcd
+      note: cover badge
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: GitHub
+        email: noreply@github.com
+    - commit: 7ed28940509592577336997682a38a7805966bf6
+      note: change cover output
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+    - commit: 2b0b6f65ceb8989f1fc1abcb4efe3f3553368e19
+      note: test cover
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+    - commit: 86bacfa9e4151ce900d098721153af873ead665f
+      note: test wrappers
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+    - commit: 7eec3fb8cca7671fe1323a2555a06ae64fe6dd60
+      note: codecov
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+- semver: 1.0.0
+  date: 2022-07-01T11:36:37-06:00
+  packager: Kevin Mulvey <kmulvey@linux.com>
+  changes:
+    - commit: 7ece96ab14f143f59790202c13ff4059e63429bf
+      note: |-
+        Merge pull request #3 from kmulvey/dependabot/go_modules/github.com/stretchr/testify-1.8.0
+
+        Bump github.com/stretchr/testify from 1.7.5 to 1.8.0
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: GitHub
+        email: noreply@github.com
+    - commit: dae6d6428c849f331eb73be22c4c790a595f6b73
+      note: |-
+        Bump github.com/stretchr/testify from 1.7.5 to 1.8.0
+
+        Bumps [github.com/stretchr/testify](https://github.com/stretchr/testify) from 1.7.5 to 1.8.0.
+        - [Release notes](https://github.com/stretchr/testify/releases)
+        - [Commits](https://github.com/stretchr/testify/compare/v1.7.5...v1.8.0)
+
+        ---
+        updated-dependencies:
+        - dependency-name: github.com/stretchr/testify
+          dependency-type: direct:production
+          update-type: version-update:semver-minor
+        ...
+      author:
+        name: dependabot[bot]
+        email: 49699333+dependabot[bot]@users.noreply.github.com
+      committer:
+        name: GitHub
+        email: noreply@github.com
+    - commit: bc10f0d991402633809612fa4ec9364ce499f1f7
+      note: |-
+        Merge pull request #2 from kmulvey/dependabot/go_modules/github.com/stretchr/testify-1.7.5
+
+        Bump github.com/stretchr/testify from 1.7.4 to 1.7.5
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: GitHub
+        email: noreply@github.com
+    - commit: f5700ae295a805a1da6b87ca3f7f12d4a7a5c26d
+      note: |-
+        Bump github.com/stretchr/testify from 1.7.4 to 1.7.5
+
+        Bumps [github.com/stretchr/testify](https://github.com/stretchr/testify) from 1.7.4 to 1.7.5.
+        - [Release notes](https://github.com/stretchr/testify/releases)
+        - [Commits](https://github.com/stretchr/testify/compare/v1.7.4...v1.7.5)
+
+        ---
+        updated-dependencies:
+        - dependency-name: github.com/stretchr/testify
+          dependency-type: direct:production
+          update-type: version-update:semver-patch
+        ...
+      author:
+        name: dependabot[bot]
+        email: 49699333+dependabot[bot]@users.noreply.github.com
+      committer:
+        name: GitHub
+        email: noreply@github.com
+    - commit: 6b475660acb28837ecb2fe198ff9836647c9005b
+      note: me
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: GitHub
+        email: noreply@github.com
+    - commit: cf7b58bf53a4018da56b17e4778eafa1dec51b89
+      note: |-
+        Merge pull request #1 from kmulvey/dependabot/go_modules/github.com/stretchr/testify-1.7.4
+
+        Bump github.com/stretchr/testify from 1.7.1 to 1.7.4
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: GitHub
+        email: noreply@github.com
+    - commit: a7afd25f2019c48a55941ec8b8414c1d07da36d8
+      note: |-
+        Bump github.com/stretchr/testify from 1.7.1 to 1.7.4
+
+        Bumps [github.com/stretchr/testify](https://github.com/stretchr/testify) from 1.7.1 to 1.7.4.
+        - [Release notes](https://github.com/stretchr/testify/releases)
+        - [Commits](https://github.com/stretchr/testify/compare/v1.7.1...v1.7.4)
+
+        ---
+        updated-dependencies:
+        - dependency-name: github.com/stretchr/testify
+          dependency-type: direct:production
+          update-type: version-update:semver-patch
+        ...
+      author:
+        name: dependabot[bot]
+        email: 49699333+dependabot[bot]@users.noreply.github.com
+      committer:
+        name: GitHub
+        email: noreply@github.com
+    - commit: 4208c70be6457065281418bcd01d75600a5cdee3
+      note: vuln scan
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: GitHub
+        email: noreply@github.com
+    - commit: 9a71a16061984f81f6affb631eb5f89521e9a869
+      note: deps
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: GitHub
+        email: noreply@github.com
+- semver: 0.4.1
+  date: 2022-06-07T12:26:19-06:00
+  packager: Kevin Mulvey <kmulvey@linux.com>
+  changes:
+    - commit: 48501b75aafba684a1b9317c76d743b0768480e5
+      note: deps
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+    - commit: d3636ba1a47ab3cfaa0b0cd536d2f6b322faa927
+      note: block size benchmakrs
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: GitHub
+        email: noreply@github.com
+    - commit: 5d576506d640f1619a28b2bbde6771a1e7fc6473
+      note: rename
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+    - commit: 086c8f1462ef813c05a3d05e614211ffa8c82830
+      note: spacing
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+    - commit: 541a58789688a7ccf19ac237722c0db279321843
+      note: benchmarks
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+    - commit: 440a0ab7b382d3e72b3da7ff61f7e2274105a079
+      note: notes
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: GitHub
+        email: noreply@github.com
+    - commit: 1c0a6287180e94333c677f81408970a31c3b974d
+      note: usage
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: GitHub
+        email: noreply@github.com
+- semver: 0.3.0
+  date: 2022-05-17T17:44:47-06:00
+  packager: Kevin Mulvey <kmulvey@linux.com>
+  changes:
+    - commit: d8b5208be7098896b5be4043071b933824f850d3
+      note: bench
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: GitHub
+        email: noreply@github.com
+    - commit: 8e368ceaabec2cb242aa4344aca908857c86023d
+      note: give main() to releaser
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+- semver: 0.2.0
+  date: 2022-05-17T16:04:45-06:00
+  packager: Kevin Mulvey <kmulvey@linux.com>
+  changes:
+    - commit: b86b95e6a349866bf4759e98ac309066f17fa106
+      note: pass in context
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+    - commit: 48d6dabc6a467da7f3a58c89e08da659210ab575
+      note: linting
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+- semver: 0.1.0
+  date: 2022-05-17T15:43:47-06:00
+  packager: Kevin Mulvey <kmulvey@linux.com>
+  changes:
+    - commit: 78c606cf33ff60863d7f1f42ff8b3c81793b5c1d
+      note: pass in hash funcs
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+    - commit: 33e11bdddccb742cb83aa92582d766f781984207
+      note: pass in hash constructor
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+    - commit: da62252741e8ee2d0b418817244fadbb7e8ddf2a
+      note: test parallel
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+    - commit: 6b455c1f380dada6b2c7ce3aaf938adb37a8185b
+      note: merge
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+    - commit: bd7e0875cdfaa6425f95b947eb73bc8779ba7e30
+      note: break out tests
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+    - commit: 96a3c503ec16770a641fefc36fa12fafbf1c13b3
+      note: rename
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+    - commit: bee6fdeef85ef103435afd66ff3e5d9246f8a380
+      note: split files
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+    - commit: 20b7acf9a6c9957ac4f1fa848b013e3387b5ec32
+      note: errgroup
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+    - commit: 375a7c41fc3772df238bcca748fc7be8028a07ce
+      note: fix stream file bugs
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+    - commit: dcffb41c84e406d0eeb006689c8e95de440c99c1
+      note: bugs
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+    - commit: 36061041c578395bf23054c7fd32d8686f25a09b
+      note: badges
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: GitHub
+        email: noreply@github.com
+    - commit: 9c9be1d0db9af0fe68da02bb5a086f6c5c19c67e
+      note: readme
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: GitHub
+        email: noreply@github.com
+    - commit: 3f7580b20e1dce68b4f28b2b6d83c38e74c948e0
+      note: ignore
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+    - commit: 0108a394a01027a44f29446da3c6a67d3e7e359a
+      note: cli tool
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+    - commit: 372a3345777dfe527688f01397592a99b3b3ba89
+      note: running example
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+    - commit: 761b816ef2aefb0d04ef22a3428be6ab10a16347
+      note: init
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+    - commit: b3d51c008f18adce7934d0fc6d067bb74a345c62
+      note: Initial commit
+      author:
+        name: Kevin Mulvey
+        email: kmulvey@linux.com
+      committer:
+        name: GitHub
+        email: noreply@github.com
