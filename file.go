@@ -18,11 +18,11 @@ func (c *ConcurrentHash) streamFile(filePath string, blocks chan<- block) error 
 	}
 
 	var r = bufio.NewReader(file)
-	var buf = make([]byte, 0, c.BlockSize)
 	var index int
 	for {
-		n, err := r.Read(buf[:cap(buf)])
-		buf = buf[:n]
+		var data = make([]byte, c.BlockSize)
+		n, err := io.ReadFull(r, data)
+		data = data[:n]
 		if n == 0 {
 			if err == nil {
 				continue
@@ -36,16 +36,21 @@ func (c *ConcurrentHash) streamFile(filePath string, blocks chan<- block) error 
 			}
 			return err
 		}
-		if err != nil && err != io.EOF {
+
+		blocks <- block{Index: index, Data: data}
+		index++
+
+		if err != nil {
+			if err == io.EOF {
+				break
+			}
+			// assuming it is not an error
+			// if the last file block is short
+			if err == io.ErrUnexpectedEOF {
+				break
+			}
 			return err
 		}
-
-		// Write must not modify the slice data, even temporarily. Implementations must not retain p
-		// https://pkg.go.dev/io#Writer
-		var transportArr = make([]byte, len(buf))
-		copy(transportArr, buf)
-		blocks <- block{Index: index, Data: transportArr}
-		index++
 	}
 
 	return file.Close()
