@@ -1,6 +1,6 @@
 module github.com/kmulvey/concurrenthash
 
-go 1.19
+go 1.21
 
 require (
 	github.com/kmulvey/goutils v0.6.0
