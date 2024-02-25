@@ -9,8 +9,9 @@ import (
 )
 
 type testPair struct {
-	HashFunc func() hash.Hash
-	Expected string
+	HashFunc      func() hash.Hash
+	Expected      string
+	BenchExpected string
 }
 
 var testMatrix = []testPair{
