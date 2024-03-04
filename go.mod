@@ -4,7 +4,7 @@ go 1.21
 
 require (
 	github.com/kmulvey/goutils v0.6.0
-	github.com/stretchr/testify v1.8.4
+	github.com/stretchr/testify v1.9.0
 	github.com/twmb/murmur3 v1.1.8
 	golang.org/x/sync v0.6.0
 )
