@@ -70,7 +70,7 @@ func createRandFile(t *testing.T) string {
 	token := make([]byte, 100)
 	var bytesWritten int
 
-	for bytesWritten <= int(math.Pow(1024, 2))*250 {
+	for bytesWritten <= int(math.Pow(1024, 2))*50 {
 		rand.Read(token)
 		n, err := file.Write(token)
 		assert.NoError(t, err)
