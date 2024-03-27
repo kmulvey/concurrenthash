@@ -3,14 +3,11 @@ package main
 import (
 	"context"
 	//nolint:gosec
-	"crypto/md5"
+
 	//nolint:gosec
-	"crypto/sha1"
-	"crypto/sha256"
-	"crypto/sha512"
+
 	"flag"
 	"fmt"
-	"hash"
 	"math"
 	"os"
 	"runtime"
@@ -20,24 +17,6 @@ import (
 	"github.com/kmulvey/concurrenthash"
 )
 
-var argToHashFuncMap = map[string]func() hash.Hash{
-	"adler32":         concurrenthash.WrapAdler32,
-	"crc32IEEE":       concurrenthash.WrapCrc32IEEE,
-	"crc32Castagnoli": concurrenthash.WrapCrc32Castagnoli,
-	"crc32Koopman":    concurrenthash.WrapCrc32Koopman,
-	"crc64ISO":        concurrenthash.WrapCrc64ISO,
-	"crc64ECMA":       concurrenthash.WrapCrc64ECMA,
-	"fnv32":           concurrenthash.WrapFnv32,
-	"fnv32a":          concurrenthash.WrapFnv32a,
-	"fnv64":           concurrenthash.WrapFnv64,
-	"fnv64a":          concurrenthash.WrapFnv64a,
-	"sha256":          sha256.New,
-	"md5":             md5.New,
-	"sha1":            sha1.New,
-	"sha512":          sha512.New,
-	"murmur32":        concurrenthash.WrapMurmur32,
-	"murmur64":        concurrenthash.WrapMurmur64,
-}
 var MB = int64(math.Pow(1024, 2))
 
 func main() {
@@ -57,8 +36,8 @@ func main() {
 
 	if algos {
 		var i int
-		var names = make([]string, len(argToHashFuncMap))
-		for name := range argToHashFuncMap {
+		var names = make([]string, len(concurrenthash.HashNamesToHashFuncs))
+		for name := range concurrenthash.HashNamesToHashFuncs {
 			names[i] = name
 			i++
 		}
@@ -73,16 +52,16 @@ func main() {
 		threads = 1
 	}
 
-	if _, exists := argToHashFuncMap[hashFunc]; !exists {
+	if _, exists := concurrenthash.HashNamesToHashFuncs[hashFunc]; !exists {
 		fmt.Println("Hash function", hashFunc, "is not supported")
 		os.Exit(1)
 	}
 
-	var ch = concurrenthash.NewConcurrentHash(threads, blockSize, argToHashFuncMap[hashFunc])
+	var ch = concurrenthash.NewConcurrentHash(threads, blockSize, concurrenthash.HashNamesToHashFuncs[hashFunc])
 	var hash, err = ch.HashFile(ctx, file)
 	if err != nil {
 		fmt.Printf("Encountered an error: %s", err.Error())
-		return
+		os.Exit(1)
 	}
 
 	fmt.Printf("%s: %s\n", file, hash)

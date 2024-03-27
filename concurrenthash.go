@@ -3,6 +3,13 @@ package concurrenthash
 import (
 	"bytes"
 	"context"
+
+	//nolint:gosec
+	"crypto/md5"
+	//nolint:gosec
+	"crypto/sha1"
+	"crypto/sha256"
+	"crypto/sha512"
 	"encoding/gob"
 	"fmt"
 	"hash"
@@ -17,9 +24,29 @@ type block struct {
 	Index int
 	Data  []byte
 }
+
 type sum struct {
 	Index int
 	Hash  []byte
+}
+
+var HashNamesToHashFuncs = map[string]func() hash.Hash{
+	"adler32":         WrapAdler32,
+	"crc32IEEE":       WrapCrc32IEEE,
+	"crc32Castagnoli": WrapCrc32Castagnoli,
+	"crc32Koopman":    WrapCrc32Koopman,
+	"crc64ISO":        WrapCrc64ISO,
+	"crc64ECMA":       WrapCrc64ECMA,
+	"fnv32":           WrapFnv32,
+	"fnv32a":          WrapFnv32a,
+	"fnv64":           WrapFnv64,
+	"fnv64a":          WrapFnv64a,
+	"sha256":          sha256.New,
+	"md5":             md5.New,
+	"sha1":            sha1.New,
+	"sha512":          sha512.New,
+	"murmur32":        WrapMurmur32,
+	"murmur64":        WrapMurmur64,
 }
 
 // ConcurrentHash is basically a https://en.wikipedia.org/wiki/Merkle_tree

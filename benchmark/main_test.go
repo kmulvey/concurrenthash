@@ -3,15 +3,12 @@ package main
 import (
 	"context"
 	//nolint:gosec
-	"crypto/md5"
+
 	"crypto/rand"
 
 	//nolint:gosec
-	"crypto/sha1"
-	"crypto/sha256"
-	"crypto/sha512"
+
 	"fmt"
-	"hash"
 	"math"
 	"os"
 	"testing"
@@ -21,25 +18,6 @@ import (
 	"github.com/kmulvey/concurrenthash"
 	"github.com/stretchr/testify/assert"
 )
-
-var argToHashFuncMap = map[string]func() hash.Hash{
-	"adler32":         concurrenthash.WrapAdler32,
-	"crc32IEEE":       concurrenthash.WrapCrc32IEEE,
-	"crc32Castagnoli": concurrenthash.WrapCrc32Castagnoli,
-	"crc32Koopman":    concurrenthash.WrapCrc32Koopman,
-	"crc64ISO":        concurrenthash.WrapCrc64ISO,
-	"crc64ECMA":       concurrenthash.WrapCrc64ECMA,
-	"fnv32":           concurrenthash.WrapFnv32,
-	"fnv32a":          concurrenthash.WrapFnv32a,
-	"fnv64":           concurrenthash.WrapFnv64,
-	"fnv64a":          concurrenthash.WrapFnv64a,
-	"sha256":          sha256.New,
-	"md5":             md5.New,
-	"sha1":            sha1.New,
-	"sha512":          sha512.New,
-	"murmur32":        concurrenthash.WrapMurmur32,
-	"murmur64":        concurrenthash.WrapMurmur64,
-}
 
 // do not run this with -race
 func BenchmarkHashes(b *testing.B) {
@@ -53,7 +31,7 @@ func BenchmarkHashes(b *testing.B) {
 	grid.SetOutputMirror(os.Stdout)
 	grid.AppendHeader(table.Row{"Name", "Block Size", "Milliseconds"})
 
-	for name, f := range argToHashFuncMap {
+	for name, f := range concurrenthash.HashNamesToHashFuncs {
 		for blockSize := int64(10000); blockSize <= 1e8; blockSize *= 10 {
 			var start = time.Now()
 			var ch = concurrenthash.NewConcurrentHash(4, blockSize, f)
