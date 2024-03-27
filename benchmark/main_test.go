@@ -14,6 +14,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/jedib0t/go-pretty/v6/table"
 	"github.com/kmulvey/concurrenthash"
 	"github.com/stretchr/testify/assert"
 )
@@ -44,6 +45,11 @@ func BenchmarkHashes(b *testing.B) {
 	defer removeFile(b, filename)
 
 	var ctx = context.Background()
+
+	var grid = table.NewWriter()
+	grid.SetOutputMirror(os.Stdout)
+	grid.AppendHeader(table.Row{"Name", "Block Size", "Milliseconds"})
+
 	for name, f := range argToHashFuncMap {
 		for blockSize := int64(10000); blockSize <= 1e8; blockSize *= 10 {
 			var start = time.Now()
@@ -53,9 +59,10 @@ func BenchmarkHashes(b *testing.B) {
 				fmt.Printf("Encountered an error: %s \n", err.Error())
 				return
 			}
-			fmt.Printf("name: %s, block size: %d, milliseconds: %d \n", name, blockSize, time.Since(start).Milliseconds())
+			grid.AppendRow([]interface{}{name, blockSize, time.Since(start).Milliseconds()})
 		}
 	}
+	grid.Render()
 }
 
 func createRandFile(b *testing.B) string {
