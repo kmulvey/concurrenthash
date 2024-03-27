@@ -38,10 +38,10 @@ var argToHashFuncMap = map[string]func() hash.Hash{
 }
 
 // do not run this with -race
-func TestBench(t *testing.T) {
+func BenchmarkHashes(b *testing.B) {
 
-	var filename = createRandFile(t)
-	defer removeFile(t, filename)
+	var filename = createRandFile(b)
+	defer removeFile(b, filename)
 
 	var ctx = context.Background()
 	for name, f := range argToHashFuncMap {
@@ -58,30 +58,30 @@ func TestBench(t *testing.T) {
 	}
 }
 
-func createRandFile(t *testing.T) string {
+func createRandFile(b *testing.B) string {
 
 	var filename = "./rand.txt"
-	removeFile(t, filename)
+	removeFile(b, filename)
 
 	file, err := os.Create(filename)
-	assert.NoError(t, err)
+	assert.NoError(b, err)
 	defer file.Close()
 
 	token := make([]byte, 100)
 	var bytesWritten int
 
-	for bytesWritten <= int(math.Pow(1024, 2))*50 {
+	for bytesWritten <= int(math.Pow(1024, 2))*250 {
 		rand.Read(token)
 		n, err := file.Write(token)
-		assert.NoError(t, err)
+		assert.NoError(b, err)
 		bytesWritten += n
 	}
 
 	return filename
 }
 
-func removeFile(t *testing.T, file string) {
+func removeFile(b *testing.B, file string) {
 	if _, err := os.Stat(file); err == nil {
-		assert.NoError(t, os.RemoveAll(file))
+		assert.NoError(b, os.RemoveAll(file))
 	}
 }
