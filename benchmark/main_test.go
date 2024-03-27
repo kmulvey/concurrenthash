@@ -2,8 +2,11 @@ package main
 
 import (
 	"context"
+	//nolint:gosec
 	"crypto/md5"
 	"crypto/rand"
+
+	//nolint:gosec
 	"crypto/sha1"
 	"crypto/sha256"
 	"crypto/sha512"
@@ -78,7 +81,8 @@ func createRandFile(b *testing.B) string {
 	var bytesWritten int
 
 	for bytesWritten <= int(math.Pow(1024, 2))*250 {
-		rand.Read(token)
+		var _, err = rand.Read(token)
+		assert.NoError(b, err)
 		n, err := file.Write(token)
 		assert.NoError(b, err)
 		bytesWritten += n
