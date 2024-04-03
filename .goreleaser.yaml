@@ -20,6 +20,18 @@ builds:
       - amd64
       - arm64
 
+release:
+  github:
+    owner: kmulvey
+    name: concurrenthash
+  # IDs of the archives to use.
+  ids:
+    - concurrenthash
+  # Whether to remove existing draft releases with the same name before creating
+  replace_existing_draft: true
+  # Whether to remove an artifact that already exists.
+  replace_existing_artifacts: true
+
 archives:
   - id: dist
     name_template: >-
@@ -28,10 +40,13 @@ archives:
       {{- if eq .Arch "amd64" }}x86_64
       {{- else if eq .Arch "386" }}i386
       {{- else }}{{ .Arch }}{{ end }}
+
 checksum:
   name_template: "checksums.txt"
+
 snapshot:
   name_template: "{{ incpatch .Version }}-next"
+
 changelog:
   sort: asc
   filters:
