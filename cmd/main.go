@@ -2,9 +2,6 @@ package main
 
 import (
 	"context"
-	//nolint:gosec
-
-	//nolint:gosec
 
 	"flag"
 	"fmt"
