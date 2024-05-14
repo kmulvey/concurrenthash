@@ -1,10 +1,9 @@
 module github.com/kmulvey/concurrenthash
 
 go 1.22.1
-
 require (
 	github.com/jedib0t/go-pretty/v6 v6.5.6
-	github.com/kmulvey/goutils v0.6.0
+	github.com/kmulvey/goutils v0.7.0
 	github.com/stretchr/testify v1.9.0
 	github.com/twmb/murmur3 v1.1.8
 	golang.org/x/sync v0.6.0
