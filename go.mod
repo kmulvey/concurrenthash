@@ -3,7 +3,7 @@ module github.com/kmulvey/concurrenthash
 go 1.23.1
 
 require (
-	github.com/jedib0t/go-pretty/v6 v6.5.9
+	github.com/jedib0t/go-pretty/v6 v6.6.4
 	github.com/kmulvey/goutils v0.8.0
 	github.com/stretchr/testify v1.9.0
 	github.com/twmb/murmur3 v1.1.8
