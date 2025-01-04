@@ -1,6 +1,6 @@
 module github.com/kmulvey/concurrenthash
 
-go 1.23.2
+go 1.23.4
 
 require (
 	github.com/jedib0t/go-pretty/v6 v6.5.9
