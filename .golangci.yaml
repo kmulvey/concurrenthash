@@ -25,7 +25,6 @@ linters:
     - wastedassign
 linters-settings:
   govet:
-    check-shadowing: false
     disable-all: false
     enable-all: true
     disable:
