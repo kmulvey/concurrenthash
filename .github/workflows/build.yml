@@ -44,7 +44,7 @@ jobs:
 
       - name: Build 
         run: |
-          make build
+          go build -v -ldflags="-s -w" ./...
 
       - name: Govulncheck
         uses: kmulvey/govulncheck-action@v1.4.0
