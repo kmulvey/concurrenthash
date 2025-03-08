@@ -2,6 +2,7 @@ package concurrenthash
 
 import (
 	"bufio"
+	"errors"
 	"fmt"
 	"io"
 	"os"
@@ -14,7 +15,7 @@ func (c *ConcurrentHash) streamFile(filePath string, blocks chan<- block) error 
 
 	var file, err = os.Open(filePath)
 	if err != nil {
-		return err
+		return fmt.Errorf("error opening file: %s, err: %w", filePath, err)
 	}
 
 	var r = bufio.NewReader(file)
@@ -32,9 +33,9 @@ func (c *ConcurrentHash) streamFile(filePath string, blocks chan<- block) error 
 			}
 			var closeErr = file.Close()
 			if closeErr != nil {
-				return fmt.Errorf("close file err: %w, buf.Read err: %s", closeErr, err.Error()) // cant have two %w
+				return fmt.Errorf("error closing file: %s, err: %w", filePath, err)
 			}
-			return err
+			return fmt.Errorf("error reading file: %s, err: %w", filePath, err)
 		}
 
 		blocks <- block{Index: index, Data: data}
@@ -46,12 +47,16 @@ func (c *ConcurrentHash) streamFile(filePath string, blocks chan<- block) error 
 			}
 			// assuming it is not an error
 			// if the last file block is short
-			if err == io.ErrUnexpectedEOF {
+			if errors.Is(err, io.ErrUnexpectedEOF) {
 				break
 			}
-			return err
+			return fmt.Errorf("error reading file: %s, err: %w", filePath, err)
 		}
 	}
 
-	return file.Close()
+	if err := file.Close(); err != nil {
+		return fmt.Errorf("error closing file: %s, err: %w", filePath, err)
+	}
+
+	return nil
 }

@@ -30,6 +30,7 @@ type sum struct {
 	Hash  []byte
 }
 
+// nolint:gochecknoglobals
 var HashNamesToHashFuncs = map[string]func() hash.Hash{
 	"adler32":         WrapAdler32,
 	"crc32IEEE":       WrapCrc32IEEE,
@@ -60,7 +61,7 @@ type ConcurrentHash struct {
 	HashesLock sync.RWMutex
 }
 
-// NewConcurrentHash is the constructor and entrypoint
+// NewConcurrentHash is the constructor and entrypoint.
 func NewConcurrentHash(concurrency int, blockSize int64, hashFunc func() hash.Hash) ConcurrentHash {
 	return ConcurrentHash{
 		Concurrency:     concurrency,
@@ -70,13 +71,13 @@ func NewConcurrentHash(concurrency int, blockSize int64, hashFunc func() hash.Ha
 }
 
 // HashFile is a coordination func that fans out to hash workers,
-// collects their output and hashes the final array
+// collects their output and hashes the final array.
 func (c *ConcurrentHash) HashFile(ctx context.Context, file string) (string, error) {
 
 	// make sure the file even exists first
 	var stat, err = os.Stat(file)
 	if err != nil {
-		return "", err
+		return "", fmt.Errorf("error stating file: %s, err: %w", file, err)
 	}
 	c.HashesLock.Lock()
 	c.Hashes = make([][]byte, (stat.Size()+c.BlockSize-1)/c.BlockSize)
@@ -87,7 +88,7 @@ func (c *ConcurrentHash) HashFile(ctx context.Context, file string) (string, err
 	var blocks = make(chan block)
 	var errGroup = new(errgroup.Group)
 
-	for i := 0; i < c.Concurrency; i++ {
+	for i := range c.Concurrency {
 		var sums = make(chan sum)
 		sumChans[i] = sums
 		errGroup.Go(func() error {
@@ -104,7 +105,7 @@ func (c *ConcurrentHash) HashFile(ctx context.Context, file string) (string, err
 
 	// wait for all ^^ to finish
 	if err := errGroup.Wait(); err != nil {
-		return "", err
+		return "", err // nolint:wrapcheck
 	}
 
 	// hash the hashes
@@ -113,7 +114,7 @@ func (c *ConcurrentHash) HashFile(ctx context.Context, file string) (string, err
 
 	c.HashesLock.Lock()
 	if err := enc.Encode(c.Hashes); err != nil {
-		return "", err
+		return "", fmt.Errorf("error encoding hashes: %w", err)
 	}
 	c.HashesLock.Unlock()
 
@@ -121,7 +122,7 @@ func (c *ConcurrentHash) HashFile(ctx context.Context, file string) (string, err
 	h.Reset()
 	_, err = h.Write(buf.Bytes())
 	if err != nil {
-		return "", err
+		return "", fmt.Errorf("error hashing hashes: %w", err)
 	}
 	return fmt.Sprintf("%x", h.Sum(nil)), nil
 }
