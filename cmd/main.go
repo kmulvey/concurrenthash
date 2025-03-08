@@ -4,7 +4,6 @@ import (
 	"context"
 
 	"flag"
-	"fmt"
 	"math"
 	"os"
 	"runtime"
@@ -12,8 +11,11 @@ import (
 	"strings"
 
 	"github.com/kmulvey/concurrenthash"
+	log "github.com/sirupsen/logrus"
 )
 
+// nolint:gochecknoglobals
+// MB is a megabyte.
 var MB = int64(math.Pow(1024, 2))
 
 func main() {
@@ -39,7 +41,7 @@ func main() {
 			i++
 		}
 		sort.Strings(names)
-		fmt.Println("Supported hashing algorithms: " + strings.Join(names, ", "))
+		log.Info("Supported hashing algorithms: " + strings.Join(names, ", "))
 		os.Exit(0)
 	}
 
@@ -50,16 +52,16 @@ func main() {
 	}
 
 	if _, exists := concurrenthash.HashNamesToHashFuncs[hashFunc]; !exists {
-		fmt.Println("Hash function", hashFunc, "is not supported")
+		log.Error("Hash function", hashFunc, "is not supported")
 		os.Exit(1)
 	}
 
 	var ch = concurrenthash.NewConcurrentHash(threads, blockSize, concurrenthash.HashNamesToHashFuncs[hashFunc])
 	var hash, err = ch.HashFile(ctx, file)
 	if err != nil {
-		fmt.Printf("Encountered an error: %s", err.Error())
+		log.Errorf("Encountered an error: %s", err.Error())
 		os.Exit(1)
 	}
 
-	fmt.Printf("%s: %s\n", file, hash)
+	log.Infof("%s: %s\n", file, hash)
 }

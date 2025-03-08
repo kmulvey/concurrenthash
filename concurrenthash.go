@@ -11,6 +11,7 @@ import (
 	"crypto/sha256"
 	"crypto/sha512"
 	"encoding/gob"
+	"encoding/hex"
 	"fmt"
 	"hash"
 	"os"
@@ -124,5 +125,5 @@ func (c *ConcurrentHash) HashFile(ctx context.Context, file string) (string, err
 	if err != nil {
 		return "", fmt.Errorf("error hashing hashes: %w", err)
 	}
-	return fmt.Sprintf("%x", h.Sum(nil)), nil
+	return hex.EncodeToString(h.Sum(nil)), nil
 }

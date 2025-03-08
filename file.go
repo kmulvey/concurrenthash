@@ -8,8 +8,7 @@ import (
 	"os"
 )
 
-// streamFile reads the file in blocks given a block size in ConcurrentHash and
-// writes them to a given channel: blocks
+// streamFile reads the file in blocks given a block size in ConcurrentHash and writes them to a given channel: blocks.
 func (c *ConcurrentHash) streamFile(filePath string, blocks chan<- block) error {
 	defer close(blocks)
 

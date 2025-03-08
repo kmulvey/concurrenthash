@@ -5,6 +5,7 @@ go 1.24.0
 require (
 	github.com/jedib0t/go-pretty/v6 v6.6.7
 	github.com/kmulvey/goutils v0.9.0
+	github.com/sirupsen/logrus v1.9.3
 	github.com/stretchr/testify v1.10.0
 	github.com/twmb/murmur3 v1.1.8
 	golang.org/x/sync v0.12.0

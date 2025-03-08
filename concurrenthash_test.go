@@ -1,7 +1,6 @@
 package concurrenthash
 
 import (
-	"context"
 	"testing"
 
 	"crypto/sha256"
@@ -12,7 +11,7 @@ import (
 func TestEverything(t *testing.T) {
 	t.Parallel()
 
-	var ctx = context.Background()
+	var ctx = t.Context()
 	var cs = NewConcurrentHash(2, 10, sha256.New)
 	var sum, err = cs.HashFile(ctx, "./rand-file.txt")
 	assert.NoError(t, err)

@@ -1,14 +1,8 @@
 package main
 
 import (
-	"context"
-	//nolint:gosec
-
 	"crypto/rand"
 
-	//nolint:gosec
-
-	"fmt"
 	"math"
 	"os"
 	"testing"
@@ -19,13 +13,12 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-// do not run this with -race
 func BenchmarkHashes(b *testing.B) {
 
 	var filename = createRandFile(b)
 	defer removeFile(b, filename)
 
-	var ctx = context.Background()
+	var ctx = b.Context()
 
 	var grid = table.NewWriter()
 	grid.SetOutputMirror(os.Stdout)
@@ -37,16 +30,16 @@ func BenchmarkHashes(b *testing.B) {
 			var ch = concurrenthash.NewConcurrentHash(4, blockSize, f)
 			var _, err = ch.HashFile(ctx, filename)
 			if err != nil {
-				fmt.Printf("Encountered an error: %s \n", err.Error())
-				return
+				assert.NoError(b, err)
 			}
-			grid.AppendRow([]interface{}{name, blockSize, time.Since(start).Milliseconds()})
+			grid.AppendRow([]any{name, blockSize, time.Since(start).Milliseconds()})
 		}
 	}
 	grid.Render()
 }
 
 func createRandFile(b *testing.B) string {
+	b.Helper()
 
 	var filename = "./rand.txt"
 	removeFile(b, filename)
@@ -70,6 +63,7 @@ func createRandFile(b *testing.B) string {
 }
 
 func removeFile(b *testing.B, file string) {
+	b.Helper()
 	if _, err := os.Stat(file); err == nil {
 		assert.NoError(b, os.RemoveAll(file))
 	}

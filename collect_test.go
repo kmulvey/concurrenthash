@@ -10,7 +10,7 @@ import (
 func TestCollectSums(t *testing.T) {
 	t.Parallel()
 
-	var ctx, cancel = context.WithCancel(context.Background())
+	var ctx, cancel = context.WithCancel(t.Context())
 	var cs = NewConcurrentHash(2, 10, sha256.New)
 	cs.Hashes = make([][]byte, 2)
 	var sums = make(chan sum)

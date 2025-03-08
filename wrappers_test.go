@@ -1,7 +1,6 @@
 package concurrenthash
 
 import (
-	"context"
 	"hash"
 	"testing"
 
@@ -14,6 +13,7 @@ type testPair struct {
 	BenchExpected string
 }
 
+// nolint: gochecknoglobals
 var testMatrix = []testPair{
 	{HashFunc: WrapAdler32, Expected: "23a01065"},
 	{HashFunc: WrapCrc32IEEE, Expected: "adb01c6e"},
@@ -40,7 +40,7 @@ func TestWrappers(t *testing.T) {
 
 	for _, pair := range testMatrix {
 		var cs = NewConcurrentHash(2, 10, pair.HashFunc)
-		var sum, err = cs.HashFile(context.Background(), "./rand-file.txt")
+		var sum, err = cs.HashFile(t.Context(), "./rand-file.txt")
 		assert.NoError(t, err)
 		assert.Equal(t, pair.Expected, sum)
 	}
