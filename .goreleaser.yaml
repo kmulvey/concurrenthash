@@ -12,6 +12,8 @@ builds:
     binary: concurrenthash
     ldflags:
       - -s -w -X main.build={{.Version}}
+      - -X go.szostok.io/version.version={{.Version}}
+      - -X go.szostok.io/version.buildDate={{.Date}}
     goos:
       - freebsd
       - windows
@@ -47,13 +49,6 @@ checksum:
 
 snapshot:
   name_template: "{{ incpatch .Version }}-snapshot"
-
-changelog:
-  sort: asc
-  filters:
-    exclude:
-      - "^docs:"
-      - "^test:"
 
 nfpms:
   # note that this is an array of nfpm configs
@@ -95,8 +90,6 @@ nfpms:
     # Path that the binaries should be installed.
     # Default: '/usr/bin'
     bindir: /usr/bin
-
-    changelog: ./changelog.yml
 
     # Custom configuration applied only to the RPM packager.
     rpm:
