@@ -1,4 +1,7 @@
 # Options for analysis running.
+# why windows fails gofmt:
+# https://github.com/golangci/golangci-lint/issues/1018
+# https://github.com/golangci/golangci-lint/issues/580
 run:
   concurrency: 10
   timeout: 10m
