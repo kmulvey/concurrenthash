@@ -48,7 +48,7 @@ checksum:
   name_template: "checksums.txt"
 
 snapshot:
-  name_template: "{{ incpatch .Version }}-snapshot"
+  version_template: "{{ incpatch .Version }}-snapshot"
 
 nfpms:
   # note that this is an array of nfpm configs
@@ -57,7 +57,7 @@ nfpms:
 
     package_name: concurrenthash
 
-    builds:
+    ids:
       - concurrenthash
 
     # Your app's vendor.
