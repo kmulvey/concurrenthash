@@ -3,7 +3,6 @@ package main
 import (
 	"crypto/rand"
 
-	"math"
 	"os"
 	"testing"
 	"time"
@@ -46,12 +45,12 @@ func createRandFile(b *testing.B) string {
 
 	file, err := os.Create(filename)
 	assert.NoError(b, err)
-	defer file.Close()
+	defer func() { assert.NoError(b, file.Close()) }()
 
 	token := make([]byte, 100)
 	var bytesWritten int
 
-	for bytesWritten <= int(math.Pow(1024, 2))*250 {
+	for bytesWritten <= 1024*1024*250 {
 		var _, err = rand.Read(token)
 		assert.NoError(b, err)
 		n, err := file.Write(token)

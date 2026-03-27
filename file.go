@@ -12,7 +12,7 @@ import (
 func (c *ConcurrentHash) streamFile(filePath string, blocks chan<- block) error {
 	defer close(blocks)
 
-	var file, err = os.Open(filePath)
+	var file, err = os.Open(filePath) //nolint:gosec // filePath is caller-provided; the caller controls which file to hash
 	if err != nil {
 		return fmt.Errorf("error opening file: %s, err: %w", filePath, err)
 	}

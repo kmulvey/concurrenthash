@@ -2,6 +2,7 @@
 # why windows fails gofmt:
 # https://github.com/golangci/golangci-lint/issues/1018
 # https://github.com/golangci/golangci-lint/issues/580
+version: "2"
 run:
   concurrency: 10
   timeout: 10m
@@ -10,10 +11,11 @@ run:
   go: "1.24"
 
 linters:
-  enable-all: true
+  default: all
   disable:
     - nolintlint
     - wsl # white space
+    - wsl_v5 # white space
     - lll # long lines
     - nlreturn # new lines before return
     - varnamelen
@@ -22,22 +24,30 @@ linters:
     - mnd # magic numbers
     - depguard # deps white list
     - exhaustruct # finds structures with uninitialized fields
-    - gci # import formatting
     - gomoddirectives # go.mod linting
-    - gofumpt # aggressive gofmt
     - cyclop # TEMP ... should be addressed
-    - tenv # Replaced by usetesting.
+    - gochecknoglobals # who cares about prom globals
+    - godot # periods at end of comments
+    - noctx # context not used in this codebase
+    - gochecknoinits # we use init for prometheus metrics registration
+    - noinlineerr # we don't care about inlining errors
+  settings:
+    revive:
+      rules:
+        - name: package-comments
+          disabled: true
+    govet:
+      disable-all: false
+      enable-all: true
+      disable:
+        - shadow
+        - fieldalignment # giving false positives
+    testifylint:
+      # Enable all checkers (https://github.com/Antonboom/testifylint#checkers).
+      enable-all: true
+      disable:
+        - require-error
+    promlinter:
+      disabled-linters:
+        - "MetricUnits"
 
-linters-settings:
-  govet:
-    disable-all: false
-    enable-all: true
-    disable:
-      - shadow
-      - fieldalignment # giving false positives
-
-  testifylint:
-    # Enable all checkers (https://github.com/Antonboom/testifylint#checkers).
-    enable-all: true
-    disable:
-      - require-error

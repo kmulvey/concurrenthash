@@ -31,8 +31,8 @@ type sum struct {
 	Hash  []byte
 }
 
-// nolint:gochecknoglobals
-var HashNamesToHashFuncs = map[string]func() hash.Hash{
+// HashNamesToHashFuncs maps hash function names to their hash constructors.
+var HashNamesToHashFuncs = map[string]func() hash.Hash{ //nolint:gochecknoglobals
 	"adler32":         WrapAdler32,
 	"crc32IEEE":       WrapCrc32IEEE,
 	"crc32Castagnoli": WrapCrc32Castagnoli,

@@ -4,7 +4,6 @@ import (
 	"context"
 
 	"flag"
-	"math"
 	"os"
 	"runtime"
 	"sort"
@@ -14,9 +13,8 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-// nolint:gochecknoglobals
 // MB is a megabyte.
-var MB = int64(math.Pow(1024, 2))
+var MB = int64(1024 * 1024) //nolint:gochecknoglobals
 
 func main() {
 	var file string
