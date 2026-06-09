@@ -8,7 +8,7 @@ require (
 	github.com/sirupsen/logrus v1.9.4
 	github.com/stretchr/testify v1.10.0
 	github.com/twmb/murmur3 v1.1.8
-	golang.org/x/sync v0.20.0
+	golang.org/x/sync v0.21.0
 )
 
 require (
