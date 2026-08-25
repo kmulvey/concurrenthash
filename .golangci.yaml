@@ -25,12 +25,14 @@ linters:
     - depguard # deps white list
     - exhaustruct # finds structures with uninitialized fields
     - gomoddirectives # go.mod linting
+    - gomodguard # deprecated, use gomodguard_v2 if needed
     - cyclop # TEMP ... should be addressed
     - gochecknoglobals # who cares about prom globals
     - godot # periods at end of comments
     - noctx # context not used in this codebase
     - gochecknoinits # we use init for prometheus metrics registration
     - noinlineerr # we don't care about inlining errors
+    - exhaustruct_v5 # struct initialization strictness
   settings:
     revive:
       rules:
