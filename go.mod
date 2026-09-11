@@ -1,13 +1,13 @@
 module github.com/kmulvey/concurrenthash
 
-go 1.25.0
+go 1.26
 
 require (
 	github.com/jedib0t/go-pretty/v6 v6.8.3
 	github.com/kmulvey/goutils v0.10.0
 	github.com/sirupsen/logrus v1.10.2
 	github.com/stretchr/testify v1.12.1
-	github.com/twmb/murmur3 v1.1.8
+	github.com/twmb/murmur3 v1.2.0
 	golang.org/x/sync v0.22.0
 )
 
