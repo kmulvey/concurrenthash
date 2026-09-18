@@ -19,7 +19,7 @@ jobs:
         with:
           check-latest: true
           cache: true
-          go-version: "1.25"
+          go-version-file: go.mod
 
       - name: Prepare
         run: |
@@ -40,11 +40,10 @@ jobs:
         uses: golangci/golangci-lint-action@v9
         with:
           version: latest
-          args: --timeout=5m
 
       - name: Build
         run: |
           go build -v -ldflags="-s -w" ./...
 
       - name: Govulncheck
-        uses: kmulvey/govulncheck-action@v1.5.0
+        uses: kmulvey/govulncheck-action@v1.6.0
